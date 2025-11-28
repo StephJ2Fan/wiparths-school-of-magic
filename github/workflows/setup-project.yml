@@ -1,0 +1,21 @@
+name: Setup Project
+
+on:
+  workflow_dispatch:
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run project setup script
+        run: |
+          npm install @octokit/core @octokit/plugin-rest-endpoint-methods
+          node .github/scripts/setup-project.js
