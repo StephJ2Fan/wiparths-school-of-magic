@@ -26,7 +26,6 @@ put secret game- or server-specific settings in secret_settings.py.
 
 # Use the defaults from Evennia unless explicitly overridden
 from evennia.settings_default import *
-from evennia.settings_default import CMDSET_ACCOUNT as DEFAULT_CMDSET_ACCOUNT
 
 ######################################################################
 # Evennia base server config
@@ -39,8 +38,8 @@ SERVERNAME = "newgame"
 ######################################################################
 # command sets to load
 ######################################################################
-CMDSET_ACCOUNT = "evennia.commands.default.cmdset_account.AccountCmdSet,commands.devadmin.devadmin_cmdset.DevAdminCmdSet"
-
+#CMDSET_ACCOUNT = settings_default.CMDSET_ACCOUNT + [
+#   "commands.devadmin.devadmin_cmdset.DevAdminCmdSet",]
 
 ######################################################################
 # Settings given in secret_settings.py override those in this file.

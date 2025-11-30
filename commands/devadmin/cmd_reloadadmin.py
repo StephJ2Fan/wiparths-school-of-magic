@@ -1,32 +1,40 @@
-from evennia import Command
-from evennia.server.sessionhandler import SESSIONS
-from evennia.utils.utils import time_format
+from evennia import CmdSet
+from evennia.utils import time_format
+from evennia.server.evennia_launcher import reload_evennia
+from evennia.accounts.accounts import AccountDB
+from evennia.commands.command import Command
 import time
 
-class CmdReloadAdmin(Command):
-    key = "@reloadadmin"
-    locks = "cmd:perm(Developer)"
-    help_category = "Admin"
 
+class CmdReloadAdmin(Command):
+    """
+    Reload server without kicking players
+    """
+
+    key = "@reloadadmin"
+    locks = "cmd:perm(Admin)"
 
     def func(self):
-        self.caller.msg("|y[Reloading server]|n")
+        start = time.time()
 
-        before = time.time()
-        online = len(SESSIONS.get_sessions())
+        self.caller.msg("[Reloading server]")
 
-        try:
-            self.caller.execute_cmd("@reload")
-        except Exception as err:
-            self.caller.msg("|r[Reload Failed]|n")
-            self.caller.msg(f"|rError:|n {err}")
-            return
+        reload_evennia()
 
-        duration = time.time() - before
+        duration = f"{(time.time() - start):.2f}s"
+        online = AccountDB.objects.filter(db_is_connected=True).count()
 
-        self.caller.msg("|g[Reload Complete]|n")
-        self.caller.msg(f" Players connected: |w{online}|n")
-        self.caller.msg(f" Reload duration: |w{duration:.2f}s|n")
-        self.caller.msg(
-            f" Reload finished at: |w{time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())}|n"
-        )
+        msg = [
+            "",
+            f"[Reload Complete]",
+            f" Players online: {online}",
+            f" Reload duration: {duration}",
+            f" Reload finished at: {time_format(time.time(), localtime=True)}",
+        ]
+
+        self.caller.msg("\n".join(msg))
+
+
+class DevAdminCmdSet(CmdSet):
+    def at_cmdset_creation(self):
+        self.add(CmdReloadAdmin())
