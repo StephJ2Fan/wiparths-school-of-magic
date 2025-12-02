@@ -1,5 +1,6 @@
 from evennia import CmdSet
-from newgame.commands.devadmin.admin_commands import CmdReloadAdmin, CmdSysInfo
+from newgame.commands.devadmin.admin_commands import (CmdReloadAdmin,
+                                                      CmdSysInfo,CmdLastReload)
 
 
 class DevAdminCmdSet(CmdSet):
@@ -12,3 +13,4 @@ class DevAdminCmdSet(CmdSet):
     def at_cmdset_creation(self):
         self.add(CmdReloadAdmin())
         self.add(CmdSysInfo())
+        self.add(CmdLastReload())

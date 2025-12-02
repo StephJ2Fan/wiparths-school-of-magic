@@ -14,7 +14,8 @@ own cmdsets by inheriting from them or directly from `evennia.CmdSet`.
 
 """
 from evennia import default_cmds
-from commands.devadmin.admin_commands import CmdReloadAdmin, CmdSysInfo
+from commands.devadmin.admin_commands import (CmdReloadAdmin, CmdSysInfo,
+                                              CmdLastReload)
 
 
 
@@ -57,6 +58,7 @@ class AccountCmdSet(default_cmds.AccountCmdSet):
         #
         self.add(CmdReloadAdmin)
         self.add(CmdSysInfo)
+        self.add(CmdLastReload)
 
 
 class UnloggedinCmdSet(default_cmds.UnloggedinCmdSet):
