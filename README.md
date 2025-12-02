@@ -15,3 +15,7 @@ Systems Layer
 Gameplay Simulation
   Magic System (#9-49)
   Combat System (#46-53)
+
+Documentation
+
+- Agents Guide: See `AGENTS.md` for guidelines on working within the Evennia-based game architecture, including typeclasses, attributes, utilities, commands, prototypes, and testing.

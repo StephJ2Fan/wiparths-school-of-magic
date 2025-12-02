@@ -13,8 +13,9 @@ to add/remove commands from the default lineup. You can create your
 own cmdsets by inheriting from them or directly from `evennia.CmdSet`.
 
 """
-
 from evennia import default_cmds
+from commands.devadmin.admin_commands import CmdReloadAdmin, CmdSysInfo
+
 
 
 class CharacterCmdSet(default_cmds.CharacterCmdSet):
@@ -54,6 +55,8 @@ class AccountCmdSet(default_cmds.AccountCmdSet):
         #
         # any commands you add below will overload the default ones.
         #
+        self.add(CmdReloadAdmin)
+        self.add(CmdSysInfo)
 
 
 class UnloggedinCmdSet(default_cmds.UnloggedinCmdSet):
@@ -87,7 +90,7 @@ class SessionCmdSet(default_cmds.SessionCmdSet):
         This is the only method defined in a cmdset, called during
         its creation. It should populate the set with command instances.
 
-        As and example we just add the empty base `Command` object.
+        As an example, we just add the empty base `Command` object.
         It prints some info.
         """
         super().at_cmdset_creation()
